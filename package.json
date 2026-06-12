@@ -1,0 +1,16 @@
+{
+  "name": "landrop",
+  "version": "1.0.0",
+  "description": "局域网万能传输工具：同一 Wi-Fi 下手机和电脑、电脑和电脑互传文件、文字、剪贴板。",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "build:exe": "node scripts/build-exe.js",
+    "check:windows": "node scripts/check-windows.js",
+    "test": "node --check server.js && node --check public/app.js && node scripts/smoke-test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

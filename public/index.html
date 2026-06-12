@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>局域快传 LanDrop</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">L</div>
+          <div>
+            <h1>局域快传</h1>
+            <p id="serverName">正在读取本机地址</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <label class="name-field">
+            <span>设备名</span>
+            <input id="deviceName" type="text" autocomplete="off" maxlength="40">
+          </label>
+          <div id="connectionStatus" class="status-pill" data-state="loading">连接中</div>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="room-panel" aria-label="房间连接">
+          <section class="panel room-card">
+            <div class="section-head">
+              <div>
+                <h2>当前房间</h2>
+                <p>同一 Wi-Fi 设备可加入</p>
+              </div>
+              <button id="newRoomButton" class="ghost-button" type="button">新房间</button>
+            </div>
+
+            <div class="room-code" aria-live="polite">
+              <span id="roomCode">------</span>
+            </div>
+
+            <div class="qr-wrap">
+              <canvas id="qrCanvas" width="220" height="220" aria-label="房间二维码"></canvas>
+              <p id="qrFallback" hidden>二维码生成失败，请复制链接或输入配对码。</p>
+            </div>
+
+            <label class="select-field">
+              <span>分享地址</span>
+              <select id="addressSelect"></select>
+            </label>
+
+            <div class="copy-row">
+              <input id="joinUrl" type="text" readonly aria-label="加入链接">
+              <button id="copyUrlButton" class="secondary-button" type="button">复制链接</button>
+            </div>
+          </section>
+
+          <section class="panel join-card">
+            <div class="section-head compact">
+              <div>
+                <h2>加入房间</h2>
+                <p>电脑到电脑可直接输入配对码</p>
+              </div>
+            </div>
+            <form id="joinForm" class="join-form">
+              <input id="joinCodeInput" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6 位配对码" aria-label="6 位配对码">
+              <button class="primary-button" type="submit">加入</button>
+            </form>
+          </section>
+
+          <section class="panel peers-card">
+            <div class="section-head compact">
+              <div>
+                <h2>在线设备</h2>
+                <p id="peerCount">0 台</p>
+              </div>
+            </div>
+            <ul id="peerList" class="peer-list"></ul>
+          </section>
+        </aside>
+
+        <section class="transfer-panel" aria-label="传输工作区">
+          <div class="send-grid">
+            <section class="panel text-card">
+              <div class="section-head">
+                <div>
+                  <h2>发送文字</h2>
+                  <p>短句、链接、验证码、剪贴板内容</p>
+                </div>
+              </div>
+              <textarea id="textInput" rows="6" maxlength="20000" placeholder="输入要发送的文字"></textarea>
+              <div class="action-row">
+                <button id="pasteSendButton" class="secondary-button" type="button">粘贴并发送</button>
+                <button id="sendTextButton" class="primary-button" type="button">发送文字</button>
+              </div>
+            </section>
+
+            <section class="panel file-card">
+              <div class="section-head">
+                <div>
+                  <h2>发送文件</h2>
+                  <p>拖入文件或从设备选择</p>
+                </div>
+              </div>
+              <label id="dropZone" class="drop-zone" for="fileInput">
+                <span class="drop-title">拖放到这里</span>
+                <span class="drop-subtitle">单文件最大 1GB，可连续选择多个文件</span>
+              </label>
+              <input id="fileInput" type="file" multiple>
+              <div id="uploadList" class="upload-list" aria-live="polite"></div>
+            </section>
+          </div>
+
+          <section class="panel activity-card">
+            <div class="section-head">
+              <div>
+                <h2>传输记录</h2>
+                <p id="activityMeta">等待传输</p>
+              </div>
+              <button id="clearLocalButton" class="ghost-button" type="button">清空本页</button>
+            </div>
+            <div id="activityList" class="activity-list" aria-live="polite"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
